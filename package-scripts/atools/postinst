@@ -1,0 +1,36 @@
+#!/bin/bash
+#
+# Perform necessary atools setup steps
+# after package is installed.
+#
+set -e
+
+PROGNAME=$(basename $0)
+INSTALLER_DIR=/opt/atools
+PREFIX="/usr"
+
+function error_exit
+{
+  echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
+  exit 1
+}
+
+
+binaries="kitchen kitchen-ansible-inventory"
+
+# rm -f before ln -sf is required for solaris 9
+for binary in $binaries; do
+  echo "Trying to rm $PREFIX/bin/$binary"
+  rm -f $PREFIX/bin/$binary
+done
+
+for binary in $binaries; do
+  ln -sf $INSTALLER_DIR/embedded/bin/$binary $PREFIX/bin || error_exit "Cannot link $binary to $PREFIX/bin"
+   echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin "
+done
+
+chown -Rh 0:0 $INSTALLER_DIR
+
+echo "Thank you for installing atools!"
+
+exit 0
