@@ -25,8 +25,11 @@ for binary in $binaries; do
 done
 
 for binary in $binaries; do
+  echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin"
   ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin || error_exit "Cannot link $binary to $PREFIX/bin"
-   echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin "
+  echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin/a-$binary"
+  ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin/a-$binary || error_exit "Cannot link $binary to $PREFIX/bin/a-$binary"
+
 done
 
 chown -Rh 0:0 $INSTALLER_DIR
