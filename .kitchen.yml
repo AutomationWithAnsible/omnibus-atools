@@ -1,0 +1,17 @@
+driver:
+  name: vagrant
+  customize:
+    cpus: 2
+    memory: 2048
+  synced_folders:
+    - ['.', '/home/vagrant/atools']
+
+provisioner:
+  name: shell
+  script: kitchen_build.sh
+
+platforms:
+  - name: ubuntu-14.04
+
+suites:
+  - name: default
