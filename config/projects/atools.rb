@@ -6,29 +6,25 @@
 
 name "atools"
 maintainer "Adham Helal"
-homepage "https://CHANGE-ME.com"
+homepage "https://github.com/yetu/atools/"
 
-
-# Defaults to C:/atools on Windows
-# and /opt/atools on all other platforms
 install_dir "/opt/#{name}"
 
 build_version Omnibus::BuildVersion.semver
 build_iteration 1
 
-
 # Creates required build directories
 dependency "preparation"
 
-
 dependency "atools"
 dependency "kitchen"
-
+dependency "python_mod"
+dependency "pip"
+dependency "requests_mod"
+dependency "aeco"
 
 # Version manifest file
 dependency "version-manifest"
-
-
 
 exclude "**/.git"
 exclude "**/bundler/git"
