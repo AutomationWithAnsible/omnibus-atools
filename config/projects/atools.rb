@@ -20,7 +20,9 @@ dependency "atools"
 dependency "kitchen"
 dependency "python_mod"
 dependency "pip"
+dependency "python_readline"
 dependency "requests_mod"
+dependency "apphome_python"
 dependency "aeco"
 
 # Version manifest file

@@ -24,7 +24,7 @@ build do
     "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",
     "LDFLAGS" => "-Wl -L#{install_dir}/embedded/lib",
   }
-  command "ln -s #{source_lib}/libgcc_s.1.dylib /opt/test1/embedded/lib"
+  command "ln -sf #{source_lib}/libgcc_s.1.dylib /opt/atools/embedded/lib"
   #command "ln -s #{source_lib}/libpthread.dylib /opt/test1/embedded/lib"
   #command "ln -s #{source_include}/stdio.h #{install_dir}/embedded/include/"
   #command "ln -s #{source_include}/stdlib.h #{install_dir}/embedded/include/"
