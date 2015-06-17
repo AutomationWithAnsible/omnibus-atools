@@ -23,6 +23,7 @@ dependency "pip"
 dependency "python_readline"
 dependency "requests_mod"
 dependency "apphome_python"
+dependency "ansible"
 dependency "aeco"
 
 # Version manifest file
