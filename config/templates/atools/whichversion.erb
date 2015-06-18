@@ -4,7 +4,7 @@ program_name="${0##*/}"
 program_arg="$@"
 program_env="${program_name}_env"
 program_debug="1"
-embedded_path="<%= embedded_path %>"
+embedded_bin_path="<%= embedded_bin_path %>"
 whichversion_path="<%= whichversion_path %>"
 # Function: Run and return exit code
 execute_program () {
@@ -26,9 +26,9 @@ exit 1
 
 #Function: find path of program to run
 find_version() {
-# If program_env and is $embedded_path/$program_name is executable
-if [ -z "${!program_env}" ] && [ -x "$embedded_path/$program_name" ]; then
-    program_to_run="$embedded_path/$program_name"
+# If program_env and is $embedded_bin_path/$program_name is executable
+if [ -z "${!program_env}" ] && [ -x "$embedded_bin_path/$program_name" ]; then
+    program_to_run="$embedded_bin_path/$program_name"
     program_to_run_why="embedded"
 
 # Check if program_env has a valid executable version
