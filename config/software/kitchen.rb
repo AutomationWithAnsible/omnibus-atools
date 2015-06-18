@@ -30,7 +30,4 @@ build do
 
   gem "instal kitchen-vagrant" \
       " --no-ri --no-rdoc", env: env
-
-  command "ln -sf #{install_dir}/embedded/bin/kitchen #{install_dir}/bin"
-  command "ln -sf #{install_dir}/embedded/bin/kitchen-ansible-inventory #{install_dir}/bin"
 end
