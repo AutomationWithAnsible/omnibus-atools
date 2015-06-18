@@ -1,5 +1,5 @@
 name "python-readline"
-version "6.2.4.1"
+default_version "6.2.4.1"
 
 dependency "python"
 dependency "pip"
