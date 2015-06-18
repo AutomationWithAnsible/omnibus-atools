@@ -6,8 +6,9 @@
 set -e
 
 PROGNAME=$(basename $0)
-INSTALLER_DIR=/opt/atools
-PREFIX="/usr"
+INSTALLER_DIR=/opt/atools/embedded/bin
+PREFIX="/usr/local/bin"
+WHICHPATH="/usr/local/bin/whichversion"
 
 function error_exit
 {
@@ -16,19 +17,35 @@ function error_exit
 }
 
 
-binaries="kitchen kitchen-ansible-inventory"
+  # aeco path
+  command "ln -sf #{whichversion_path}/whichversion #{whichversion_path}/aeco"
+
+  # kitchen path
+  command "ln -sf #{install_dir}/embedded/bin/kitchen #{install_dir}/embedded/bin/a-kitchen"
+  command "ln -sf #{whichversion_path}/whichversion #{whichversion_path}/kitchen"
+  
+  # kitchen Ansiblepush
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/kitchen-ansible-inventory"
+  
+  # ansible
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/ansible"
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/ansible-doc"
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/ansible-galaxy"
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/ansible-playbook"
+  command "ln -sf #{whichversion_path}/whichversion  #{whichversion_path}/ansible-vault"
+
+
+binaries="kitchen kitchen-ansible-inventory aeco ansible ansible-doc ansible-galaxy ansible-playbook ansible-vault"
 
 # rm -f before ln -sf is required for solaris 9
 for binary in $binaries; do
-  echo "Trying to rm $PREFIX/bin/$binary"
-  rm -f $PREFIX/bin/$binary
+  echo "Trying to rm $PREFIX/$binary"
+  rm -f $PREFIX/$binary || error_exit "Cannot remove $PREFIX/$binary"
 done
 
 for binary in $binaries; do
-  echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin"
-  ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin || error_exit "Cannot link $binary to $PREFIX/bin"
-  echo "Trying to ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin/a-$binary"
-  ln -sf $INSTALLER_DIR/bin/$binary $PREFIX/bin/a-$binary || error_exit "Cannot link $binary to $PREFIX/bin/a-$binary"
+  echo "Trying to ln -sf $WHICHPATH $PREFIX/$binary"
+  ln -sf $WHICHPATH $PREFIX/$binary || error_exit "Cannot link $WHICHPATH to $PREFIX/$binary"
 
 done
 
