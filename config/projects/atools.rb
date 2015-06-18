@@ -16,7 +16,6 @@ build_iteration 1
 # Creates required build directories
 dependency "preparation"
 
-dependency "atools"
 dependency "kitchen"
 dependency "python_mod"
 dependency "pip"
@@ -25,6 +24,7 @@ dependency "requests_mod"
 dependency "apphome_python"
 dependency "ansible"
 dependency "aeco"
+dependency "atools"
 
 # Version manifest file
 dependency "version-manifest"
