@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+program_name="${0##*/}"
+program_arg="$@"
+program_env="${program_name}_env"
+program_debug="1"
+embedded_path="<%= @embedded_path %>"
+whichversion_path="<%= @whichversion_path %>"
+
+# Run and return exit code
+execute_program () {
+$1 "$program_arg"
+exit $?
+}
+
+# If program_env and is $embedded_path/$program_name is executable
+if [ -z "${!program_env}" ] && [ -x "$embedded_path/$program_name" ]; then
+    execute_program "$embedded_path/$program_name" 1
+
+# Check if program_env has a valid executable version
+elif [ -x "${!program_env}" ]; then
+    execute_program "${!program_env}" 2
+
+# Fall back pick first thing in our path or fail
+else
+    program_options=$(which -a "$program_name" | grep -v $whichversion_path)
+    for item in ${program_options//\\n/ }
+    do
+       execute_program "$item"
+    done
+fi
+
+# If we reach this point no hope sorry
+echo "whichversion.sh: command not found"
+exit 127
