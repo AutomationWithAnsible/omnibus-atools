@@ -4,32 +4,80 @@ program_name="${0##*/}"
 program_arg="$@"
 program_env="${program_name}_env"
 program_debug="1"
-embedded_path="<%= @embedded_path %>"
-whichversion_path="<%= @whichversion_path %>"
-
-# Run and return exit code
+embedded_path="<%= embedded_path %>"
+whichversion_path="<%= whichversion_path %>"
+# Function: Run and return exit code
 execute_program () {
-$1 "$program_arg"
-exit $?
+if [ -x $program_to_run ]; then
+    $program_to_run "$program_arg"
+    exit $?
+fi
 }
 
+#Function: help
+print_help() {
+echo "  Options:                      "
+echo "          show <program>"
+echo "          set <program> <path>"
+echo "          unset <program>"
+exit 1
+}
+
+
+#Function: find path of program to run
+find_version() {
 # If program_env and is $embedded_path/$program_name is executable
 if [ -z "${!program_env}" ] && [ -x "$embedded_path/$program_name" ]; then
-    execute_program "$embedded_path/$program_name" 1
+    program_to_run="$embedded_path/$program_name"
+    program_to_run_why="embedded"
 
 # Check if program_env has a valid executable version
 elif [ -x "${!program_env}" ]; then
-    execute_program "${!program_env}" 2
+    program_to_run="${!program_env}"
+    program_to_run_why="$program_env"
 
 # Fall back pick first thing in our path or fail
 else
-    program_options=$(which -a "$program_name" | grep -v $whichversion_path)
-    for item in ${program_options//\\n/ }
-    do
-       execute_program "$item"
-    done
+    program_options=($(which -a  "$program_name" | grep -v $whichversion_path))
+    program_to_run="${program_options[1]}"
+        program_to_run_why="which"
 fi
+}
 
-# If we reach this point no hope sorry
-echo "whichversion.sh: command not found"
-exit 127
+# We are running whichversion commands
+if [ "$program_name" == "whichversion" ]; then
+    if [ -z $1 ] || [ -z $2 ]; then
+        echo "whichversion: Needs two arguments."
+        print_help
+    fi
+    case $1 in
+    "show")
+      program_name="$2"
+      program_env="${program_name}_env"
+      find_version
+      if [ -z $program_to_run ]; then
+        echo "whichversion:'$program_name' could not be found"
+      else
+        echo "whichversion:'$program_name' is set to '$program_to_run' because '$program_to_run_why'"
+      fi
+      ;;
+    "set")
+      echo "set"
+      ;;
+    "unset")
+      echo "unset"
+      ;;
+    *)
+      echo "whichversion: Unkown option '$1'"
+      print_help
+      ;;
+    esac
+
+exit 0
+else
+    find_version
+    execute_program
+    # If we reach this point no hope sorry
+    echo "whichversion.sh: command not found"
+    exit 127
+fi
