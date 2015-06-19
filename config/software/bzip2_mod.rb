@@ -1,6 +1,5 @@
 name "bzip2"
 default_version "1.0.6"
-
 dependency "zlib"
 dependency "openssl"
 
@@ -11,17 +10,18 @@ relative_path "#{name}-#{version}"
 
 build do
   env = with_standard_compiler_flags(with_embedded_path)
-
+  
   # Avoid warning where .rodata cannot be used when making a shared object
   env["CFLAGS"] << " -fPIC"
 
   # The list of arguments to pass to make
   args = "PREFIX='#{install_dir}/embedded' VERSION='#{version}'"
-
   patch source: 'makefile_take_env_vars.patch'
-  # TODO FIX
-  mac_os_x_mavericks = true
-  patch source: 'soname_install_dir.patch' #if mac_os_x_mavericks?
+
+  if (/darwin/ =~ RUBY_PLATFORM) != nil
+    puts "Patching for Mac"
+    patch source: 'soname_install_dir.patch' #if mac_os_x_mavericks?
+  end
 
   make "#{args}", env: env
   make "#{args} -f Makefile-libbz2_so", env: env

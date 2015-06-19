@@ -1,6 +1,5 @@
 name "python"
 default_version "2.7.9"
-
 dependency "gdbm"
 dependency "ncurses"
 dependency "zlib"
@@ -18,18 +17,22 @@ build do
   source_lib="/usr/lib"
   source_include="/usr/inlude"
   #"LDFLAGS" => "-Wl,-rpath,#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib",
-
-  #LDFLAGS" => "-Wl,-rpath,#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib",
-  env = {
-    "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",
-    "LDFLAGS" => "-Wl -L#{install_dir}/embedded/lib",
-  }
+  if (/darwin/ =~ RUBY_PLATFORM) != nil
+    puts "python env for mac"
+    env = {
+      "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",
+      "LDFLAGS" => "-Wl -L#{install_dir}/embedded/lib",
+    }
+  else
+    puts "python env for Linux"
+    env = {
+      "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",
+      "LDFLAGS" => "-Wl,-rpath,#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib",
+    }
+  end
+  # Linkx libgcc
   command "ln -sf #{source_lib}/libgcc_s.1.dylib /opt/atools/embedded/lib"
-  #command "ln -s #{source_lib}/libpthread.dylib /opt/test1/embedded/lib"
-  #command "ln -s #{source_include}/stdio.h #{install_dir}/embedded/include/"
-  #command "ln -s #{source_include}/stdlib.h #{install_dir}/embedded/include/"
-  #command "ln -s #{source_include}/include/sys #{install_dir}/embedded/include/"
-
+  # DO the build
   command "./configure" \
           " --prefix=#{install_dir}/embedded" \
           " --enable-shared" \
