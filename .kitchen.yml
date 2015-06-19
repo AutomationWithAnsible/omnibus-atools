@@ -4,11 +4,11 @@ driver:
     cpus: 2
     memory: 2048
   synced_folders:
-    - ['.', '/home/vagrant/atools']
+    - ['.', '/home/vagrant/omnibus-atools']
 
 provisioner:
   name: shell
-  script: kitchen_build.sh
+  script: build.sh
 
 platforms:
   - name: ubuntu-14.04
