@@ -24,6 +24,7 @@ dependency "requests_mod"
 dependency "apphome_python"
 dependency "ansible"
 dependency "aeco"
+dependency "github3.py"
 dependency "atools"
 
 # Version manifest file
