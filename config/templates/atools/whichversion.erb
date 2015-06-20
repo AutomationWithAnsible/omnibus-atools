@@ -9,7 +9,7 @@ whichversion_path="<%= whichversion_path %>"
 # Function: Run and return exit code
 execute_program () {
 if [ -x $program_to_run ]; then
-    $program_to_run "$program_arg"
+    $program_to_run $program_arg
     exit $?
 fi
 }
