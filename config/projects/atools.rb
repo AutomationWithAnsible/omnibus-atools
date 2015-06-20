@@ -19,11 +19,11 @@ dependency "kitchen"
 dependency "python_mod"
 dependency "pip"
 dependency "python_readline"
+dependency "github3.py"
 dependency "requests_mod"
 dependency "apphome_python"
 dependency "ansible"
 dependency "aeco"
-dependency "github3.py"
 dependency "atools"
 
 # Version manifest file

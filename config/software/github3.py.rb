@@ -1,5 +1,5 @@
 name "github3.py"
-default_version "0.9.3"
+default_version "1.0.0a1"
 
 dependency "pip"
 
