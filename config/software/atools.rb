@@ -29,7 +29,7 @@ build do
       vars: { default_version: default_version }
 
   erb source: "atools.py",
-      dest: "#{embedded_bin_path}/atools.py",
+      dest: "#{embedded_bin_path}/atools",
       mode: 0755,
       vars: { whichversion_path: whichversion_path, 
               embedded_bin_path: embedded_bin_path,

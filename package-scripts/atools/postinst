@@ -16,7 +16,7 @@ function error_exit
   exit 1
 }
 
-binaries="kitchen kitchen-ansible-inventory aeco ansible ansible-doc ansible-galaxy ansible-playbook ansible-vault"
+binaries="kitchen kitchen-ansible-inventory aeco ansible ansible-doc ansible-galaxy ansible-playbook ansible-vault atools"
 
 # rm -f before ln -sf is required for solaris 9
 for binary in $binaries; do
