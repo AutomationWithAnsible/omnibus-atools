@@ -6,6 +6,7 @@ atools
 
 Usage:
   atools update [ -p | --prerelease ] [ -f | --force ] [ -y | --yes ]
+  atools check-updates [ -p | --prerelease ]
   atools -v | --version
   atools -h | --help
 
@@ -106,26 +107,38 @@ class Atools:
         rc = os.system(command_to_install) 
         exit(rc)
 
+    def check_update(self):
+        print "Checking github for new releases....."
+        self.check_release()
+        if self.remote_version == None:
+            print "No suitable version to update."
+            return False
+        if self.arguments.get("--force"):
+            return "Your running '%s' and '%s' will be force installed." % (self.installed_version, self.remote_version)
+        elif self.remote_version == self.installed_version:
+            print "Your running the latest version '%s'" % self.remote_version
+            return False
+        else:
+            return ("A new update is available version '%s'." % self.remote_version)
+
     def main(self):
         #print arguments
         if self.arguments.get("--version"):
             print "atools version: ", self.installed_version
-        elif self.arguments.get("update"):
-            print "Checking github for new releases....."
-            self.check_release()
-            if self.remote_version == None:
-                print "No suitable version to update."
-                exit(1)
-            if self.arguments.get("--force"):
-                self.confirm("Your running '%s' and '%s' will be force installed." % (self.installed_version, self.remote_version))
-                self.install()
-            elif self.remote_version == self.installed_version:
-                print "Your running the latest version '%s'" % self.remote_version
-                exit(0)
+        elif self.arguments.get("check-updates"):
+            # Return 0 if no updates and 3 if updates are avaible
+            update_msg = self.check_update()
+            if update_msg:
+                print update_msg
+                exit(3)
             else:
-                self.confirm("A new update is available version '%s'." % self.remote_version)
+                print "Your up to date."
+                exit(0)
+        elif self.arguments.get("update"):
+            update_msg = self.check_update()
+            if update_msg:
+                self.confirm(update_msg)
                 self.install()
-
 
 if __name__ == '__main__':
   Atools().main()
