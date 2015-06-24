@@ -1,5 +1,5 @@
 name "atools"
-default_version "0.2.3"
+default_version "0.2.4"
 
 if windows?
   dependency "ruby-windows"

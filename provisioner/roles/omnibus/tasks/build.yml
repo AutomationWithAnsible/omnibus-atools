@@ -1,0 +1,30 @@
+---
+
+- name: build | Create omnibus directory
+  file: 
+    path="{{ item }}"
+    state=directory
+    owner="{{ omnibus_user }}"
+    mode=0755
+  with_items: omnibus_dir
+  become: True
+
+
+#old_hash="d7f7dd7e3ede3e323fc0e09381f16caf"
+#new_hash="380df856e8f789c1af97d0da9a243769"
+#sudo find / -name cacerts.rb  -type f  -exec sed -i -e 's/d7f7dd7e3ede3e323fc0e09381f16caf/380df856e8f789c1af97d0da9a243769/g' {} \;
+
+- name: build | Install bundle
+  gem: 
+    name=bundle
+    state=latest
+
+- name: build | Bundle install binstubs
+  shell: "{{ bundle_path }} install --binstubs"
+  args:
+    chdir: "{{ omnibus_project_dir }}"
+
+- name: build | omnibus build
+  shell: "pwd && {{ bundle_path }} exec omnibus build {{ omnibus_project }}"
+  args:
+    chdir: "{{ omnibus_project_dir }}"

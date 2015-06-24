@@ -59,7 +59,7 @@ class Atools:
     
     def check_release(self):
         prerelease = self.arguments.get("--prerelease")
-        repository = github3.repository('yetu', 'atools')
+        repository = github3.repository('yetu', '/omnibus-atools')
         releases = repository.releases()
         # Get the first Release
         for release in releases:

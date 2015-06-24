@@ -20,7 +20,7 @@ platforms:
     driver                    :
       name                    : localhost
     provisioner               :
-      raw_arguments           : "-c local"
+      raw_arguments           : "-c local --ask-sudo-pass"
       extra_vars              : 
           omnibus_user        : "helal"
           omnibus_project_dir : "../"
