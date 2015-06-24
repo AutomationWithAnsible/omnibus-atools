@@ -6,12 +6,25 @@ driver:
   synced_folders:
     - ['.', '/home/vagrant/omnibus-atools']
 
-provisioner:
-  name: shell
-  script: build.sh
+provisioner            :
+    name               : ansible_push
+    verbose            : "vvvv"
+    playbook           : "provisioner/main.yml"
+    ansible_config     : "provisioner/ansible.cfg"
+    chef_bootstrap_url : False
 
 platforms:
-  - name: ubuntu-14.04
+  - name                      : ubuntu-14.04
+
+  - name                      : macosx-10.10
+    driver                    :
+      name                    : localhost
+    provisioner               :
+      raw_arguments           : "-c local"
+      extra_vars              : 
+          omnibus_user        : "helal"
+          omnibus_project_dir : "../"
+
 
 suites:
   - name: default

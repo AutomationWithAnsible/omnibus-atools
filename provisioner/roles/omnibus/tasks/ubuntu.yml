@@ -1,0 +1,20 @@
+---
+
+- name: ubuntu | update cache
+  apt:
+    update_cache=yes
+  become: True
+
+- name: ubuntu | Install APT dependency 
+  apt:
+    name="{{ item }}"
+  with_items:
+    - curl
+    - git
+    - ruby-full
+    - build-essential 
+    - checkinstall
+  become: True
+
+- set_fact:
+    bundle_path: "/home/{{omnibus_user}}/.gem/ruby/*/bin/bundle"

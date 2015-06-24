@@ -1,0 +1,10 @@
+---
+
+- name: Omnbus Build
+  hosts: all
+  vars:
+    rvm_install             : False
+  roles:
+    - { role: rvm1-ansible,  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'}
+    - { role: omnibus                         }
+

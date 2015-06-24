@@ -27,6 +27,9 @@ build do
 
   gem "instal kitchen-joyent" \
       " --no-ri --no-rdoc", env: env
+  
+  gem "instal kitchen-localhost" \
+      " --no-ri --no-rdoc", env: env
 
   gem "instal kitchen-vagrant" \
       " --no-ri --no-rdoc", env: env

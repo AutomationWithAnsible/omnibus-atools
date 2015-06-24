@@ -1,0 +1,9 @@
+---
+
+omnibus_user            : "vagrant"
+omnibus_project         : "atools"
+omnibus_project_dir     : "omnibus-{{ omnibus_project }}"
+omnibus_dir             :
+                          - "/opt/{{ omnibus_project }}"
+                          - "/var/cache/omnibus"
+bundle_path             : "bundle"
