@@ -15,6 +15,8 @@ function error_exit
   echo "${PROGNAME}: ${1:-"Unknown Error"}" 1>&2
   exit 1
 }
+# Make sure /usr/local/bin/ exists
+mkdir -p /usr/local/bin/
 
 binaries="kitchen kitchen-ansible-inventory aeco ansible ansible-doc ansible-galaxy ansible-playbook ansible-vault atools"
 
