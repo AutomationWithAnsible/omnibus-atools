@@ -1,5 +1,5 @@
 name "ansible"
-default_version "1.9.1"
+default_version "1.9.2"
 
 dependency "python"
 dependency "pip"
