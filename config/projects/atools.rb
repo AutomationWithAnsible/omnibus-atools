@@ -11,6 +11,7 @@ homepage "https://github.com/yetu/atools/"
 install_dir "/opt/#{name}"
 
 build_version Omnibus::BuildVersion.semver
+#build_version "0.2.5"
 build_iteration 1
 
 # Creates required build directories
