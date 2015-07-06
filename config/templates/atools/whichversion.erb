@@ -28,6 +28,7 @@ exit 1
 find_version() {
 # If program_env and is $embedded_bin_path/$program_name is executable
 if [ -z "${!program_env}" ] && [ -x "$embedded_bin_path/$program_name" ]; then
+    export PATH=$embedded_bin_path:$PATH
     program_to_run="$embedded_bin_path/$program_name"
     program_to_run_why="embedded"
 
