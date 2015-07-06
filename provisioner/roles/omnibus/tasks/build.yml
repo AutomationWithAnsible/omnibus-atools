@@ -1,11 +1,12 @@
 ---
 
 - name: build | Create omnibus directory
-  file: 
+  file:
     path="{{ item }}"
     state=directory
     owner="{{ omnibus_user }}"
     mode=0755
+    recurse=True
   with_items: omnibus_dir
   become: True
 
@@ -15,12 +16,12 @@
 #sudo find / -name cacerts.rb  -type f  -exec sed -i -e 's/d7f7dd7e3ede3e323fc0e09381f16caf/380df856e8f789c1af97d0da9a243769/g' {} \;
 
 - name: build | Install bundle
-  gem: 
+  gem:
     name=bundle
     state=latest
 
 - name: build | Bundle install binstubs
-  shell: "{{ bundle_path }} install --binstubs"
+  shell: "pwd && {{ bundle_path }} install --binstubs --path vendor/bundle
   args:
     chdir: "{{ omnibus_project_dir }}"
 
