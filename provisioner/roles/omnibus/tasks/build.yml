@@ -20,8 +20,15 @@
     name=bundle
     state=latest
 
+- name: build | pwd
+  shell: "pwd"
+  args:
+    chdir: "{{ omnibus_project_dir }}"
+  changed_when: False
+
+
 - name: build | Bundle install binstubs
-  shell: "pwd && {{ bundle_path }} install --binstubs --path vendor/bundle
+  shell: "pwd && {{ bundle_path }} install --binstubs --path vendor/bundle"
   args:
     chdir: "{{ omnibus_project_dir }}"
 
