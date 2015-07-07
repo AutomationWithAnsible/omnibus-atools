@@ -1,5 +1,8 @@
 name "atools"
-default_version "0.2.4"
+default_version "0.2.6"
+
+#Hack for now till libgcc_s.1.dylib is properly ignored in mac
+whitelist_file /libpython2.7.dylib/
 
 if windows?
   dependency "ruby-windows"
