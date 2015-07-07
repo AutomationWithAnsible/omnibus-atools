@@ -1,10 +1,56 @@
 atools Omnibus project
 ======================
 This project creates full-stack platform-specific packages for
-`atools`!
+`atools` apphome tools
 
-Installation
-------------
+Installation atools
+-----------------------
+Check release for your platform. Then download and install :)
+
+Packages included atools
+-----------------------
+- python 
+- ansible
+- kitchen
+- aeco
+- other for more info look at config/software
+
+Kitchen-based Build Environment
+-------------------------------
+
+Currently atools will build on "ubuntu" using kitchen-vagrant. And "mac" using kitchen-localhost requires you run it from a mac
+To install required development/build pakcages. You must also have ansible installed
+
+### Prepare environment 
+```shell
+$ bundle install --binstubs --path vendor/bundle"
+```
+
+### Mac
+```shell
+$ bundle exec kitchen conv mac
+```
+
+### Ubuntu
+```shell
+$ bundle exec kitchen conv ubuntu
+```
+
+Then login to the instance and build the project as described in the Usage
+section:
+
+```shell
+$ bundle exec kitchen login ubuntu-1204
+[vagrant@ubuntu...] $ cd atools
+[vagrant@ubuntu...] $ bundle install
+[vagrant@ubuntu...] $ ...
+[vagrant@ubuntu...] $ bin/omnibus build atools
+```
+
+For a complete list of all commands and platforms, run `kitchen list` or
+`kitchen help`.
+Installation for developers 
+-----------------------
 You must have a sane Ruby 1.9+ environment with Bundler installed. Ensure all
 the required gems are installed:
 
@@ -12,7 +58,7 @@ the required gems are installed:
 $ bundle install --binstubs
 ```
 
-Usage
+Usage 
 -----
 ### Build
 
@@ -63,41 +109,4 @@ Full help for the Omnibus command line interface can be accessed with the
 $ bin/omnibus help
 ```
 
-Kitchen-based Build Environment
--------------------------------
-Every Omnibus project ships will a project-specific
-[Berksfile](http://berkshelf.com/) that will allow you to build your omnibus projects on all of the projects listed
-in the `.kitchen.yml`. You can add/remove additional platforms as needed by
-changing the list found in the `.kitchen.yml` `platforms` YAML stanza.
 
-This build environment is designed to get you up-and-running quickly. However,
-there is nothing that restricts you to building on other platforms. Simply use
-the [omnibus cookbook](https://github.com/opscode-cookbooks/omnibus) to setup
-your desired platform and execute the build steps listed above.
-
-The default build environment requires Test Kitchen and VirtualBox for local
-development. Test Kitchen also exposes the ability to provision instances using
-various cloud providers like AWS, DigitalOcean, or OpenStack. For more
-information, please see the [Test Kitchen documentation](http://kitchen.ci).
-
-Once you have tweaked your `.kitchen.yml` (or `.kitchen.local.yml`) to your
-liking, you can bring up an individual build environment using the `kitchen`
-command.
-
-```shell
-$ bin/kitchen converge ubuntu-1204
-```
-
-Then login to the instance and build the project as described in the Usage
-section:
-
-```shell
-$ bundle exec kitchen login ubuntu-1204
-[vagrant@ubuntu...] $ cd atools
-[vagrant@ubuntu...] $ bundle install
-[vagrant@ubuntu...] $ ...
-[vagrant@ubuntu...] $ bin/omnibus build atools
-```
-
-For a complete list of all commands and platforms, run `kitchen list` or
-`kitchen help`.
